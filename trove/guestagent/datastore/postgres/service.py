@@ -359,8 +359,7 @@ class PgSqlApp(service.BaseDbApp):
 class PgSqlAdmin(object):
     # Default set of options of an administrative account.
     ADMIN_OPTIONS = (
-        'SUPERUSER', 'CREATEDB', 'CREATEROLE', 'INHERIT', 'REPLICATION',
-        'BYPASSRLS', 'LOGIN'
+        'CREATEDB', 'CREATEROLE'
     )
 
     def __init__(self, username):

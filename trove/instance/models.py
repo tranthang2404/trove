@@ -977,7 +977,8 @@ class BaseInstance(SimpleInstance):
             ud = encodeutils.safe_encode(content)
             body_userdata = (
                 "- encoding: b64\n"
-                "  owner: trove:trove\n"
+                "  owner: root:root\n"
+                "  permissions: \"0644\"\n"
                 "  path: %s\n"
                 "  content: %s\n" % (
                     filename, encodeutils.safe_decode(base64.b64encode(ud)))

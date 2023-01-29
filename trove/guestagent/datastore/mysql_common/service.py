@@ -843,6 +843,32 @@ class BaseMySqlApp(service.BaseDbApp):
 
 
 class BaseMySqlRootAccess(object):
+    ADMIN_OPTIONS = [
+                   "ALTER ROUTINE",
+                   "ALTER",
+                   "CREATE ROUTINE",
+                   "CREATE TEMPORARY TABLES",
+                   "CREATE USER",
+                   "CREATE VIEW",
+                   "CREATE",
+                   "DELETE",
+                   "DROP",
+                   "EVENT",
+                   "EXECUTE",
+                   "INDEX",
+                   "INSERT",
+                   "LOCK TABLES",
+                   "PROCESS",
+                   "REFERENCES",
+                   "RELOAD",
+                   "REPLICATION CLIENT",
+                   "REPLICATION SLAVE",
+                   "SELECT",
+                   "SHOW DATABASES",
+                   "SHOW VIEW",
+                   "TRIGGER",
+                   "UPDATE",
+                   ]
 
     def __init__(self, mysql_app):
         self.mysql_app = mysql_app
@@ -885,7 +911,7 @@ class BaseMySqlRootAccess(object):
                       {'grant': CONF.root_grant,
                        'grant_option': CONF.root_grant_option})
 
-            g = sql_query.Grant(permissions=CONF.root_grant,
+            g = sql_query.Grant(permissions=self.ADMIN_OPTIONS,
                                 user=user.name,
                                 host=user.host,
                                 grant_option=CONF.root_grant_option)
