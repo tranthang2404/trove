@@ -392,8 +392,11 @@ class PgSqlAdmin(object):
         results = self.query(query.UserQuery.list_root(self.ignore_users))
         cur_roots = [row[0] for row in results]
         if 'root' not in cur_roots:
-            self.create_user(root)
-
+            try:
+                self.create_user(root)
+            except psycopg2.errors.DuplicateObject as e:
+                # bypass when create user root like MySQL
+                logging.DEBUG(f"User root already exist !. Detail: {e}")
         self.alter_user(root, None, *PgSqlAdmin.ADMIN_OPTIONS)
         return root.serialize()
 
