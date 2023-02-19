@@ -213,12 +213,10 @@ class MySqlManager(manager.Manager):
             )
             command = (
                 f'mysqld_safe --init-file={init_file.name} '
-                f'--log-error={err_file.name} '
                 f'--datadir={data_dir}'
             )
             extra_volumes = {
                 init_file.name: {"bind": init_file.name, "mode": "rw"},
-                err_file.name: {"bind": err_file.name, "mode": "rw"},
             }
 
             # Allow database service user to access the temporary files.
@@ -233,15 +231,13 @@ class MySqlManager(manager.Manager):
             except Exception as err:
                 LOG.error('Failed to reset password for restore, error: %s',
                           str(err))
-                LOG.debug('Content in init error log file: %s',
-                          err_file.read())
                 raise err
             finally:
                 LOG.debug(
                     'The init container log: %s',
                     docker_util.get_container_logs(self.app.docker_client)
                 )
-                docker_util.remove_container(self.app.docker_client)
+        docker_util.remove_container(self.app.docker_client)
 
         LOG.info('Finished to reset password for restore')
 
